@@ -1,6 +1,8 @@
 var categories = {};
 var postalCodes = {};
 
+var genders = {};
+
 function addPostalCode(location) {
    var name = location.postalCode.replace(/-\d{4}$/, '');
 
@@ -42,8 +44,6 @@ function groupByPostalCode(data) {
       return 0 - postalCode.checkins;
    });
 
-   console.log(postalCodes);
-
    _.each(postalCodes, function(postalCode) {
       $('#postal-code-list').append(sprintf('<li>%(postalCode)s (%(city)s, %(state)s): %(checkins)s</li>', postalCode));
    });
@@ -75,17 +75,52 @@ function groupByCategory(data) {
    });
 }
 
+function groupByGender(data) {
+   _.each(data, function(contact) {
+      var gender = 'unknown';
+
+      if (contact.gender !== undefined) {
+         gender = contact.gender;
+      } else if (contact.accounts.foursquare !== undefined &&
+         contact.accounts.foursquare[0].data.gender !== undefined) {
+         gender = contact.accounts.foursquare[0].data.gender;
+      } else if (contact.accounts.facebook !== undefined &&
+         contact.accounts.facebook[0].data.gender !== undefined) {
+         gender = contact.accounts.facebook[0].data.gender;
+      }
+
+      var name = gender.toLowerCase();
+
+      if (genders[name] === undefined) {
+         genders[name] = 0;
+      }
+
+      genders[name]++;
+   });
+
+   _.each(genders, function(count, gender) {
+      $('#genders-list').append(sprintf('<li>%s: %s</li>', gender, count));
+   });
+
+   console.log(genders);
+}
+
 $(function() {
    if (baseUrl === false) {
       window.alert("Couldn't find your locker, you might need to add a config.js (see https://me.singly.com/Me/devdocs/)");
    }
 
-   var url = baseUrl + '/Me/foursquare/getCurrent/checkin';
+   var foursquareUrl = baseUrl + '/Me/foursquare/getCurrent/checkin';
+   var contactsUrl = baseUrl + '/Me/contacts/';
 
-   $('#url').html(sprintf('<a href="%s">%s</a>', url, url));
+   //$('#url').html(sprintf('<a href="%s">%s</a>', url, url));
 
-   $.getJSON(url, { 'limit': 1000, 'sort': 'at', 'order': 1 }, function(data) {
+   $.getJSON(foursquareUrl, { 'limit': 1000, 'sort': 'at', 'order': 1 }, function(data) {
       groupByCategory(data);
       groupByPostalCode(data);
+   });
+
+   $.getJSON(contactsUrl, { 'limit': 5000 }, function(data) {
+      groupByGender(data);
    });
 });
