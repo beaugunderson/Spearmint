@@ -1,6 +1,6 @@
 {
     "title": "Spearmint",
     "desc": "Statistics experiments",
-    "viewer": "contacts",
+    "viewer": "places",
     "static": "true"
 }

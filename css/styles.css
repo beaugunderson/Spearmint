@@ -2,15 +2,15 @@ body {
    font-family: Georgia;
 }
 
-ul#checkins {
+ul {
    margin: 2em;
    list-style-type: none;
 }
 
-#checkins li {
+li {
    margin-bottom: 0.5em;
 }
 
-#checkins li img {
+li img {
    vertical-align: middle;
 }
