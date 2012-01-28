@@ -1,0 +1,16 @@
+body {
+   font-family: Georgia;
+}
+
+ul#checkins {
+   margin: 2em;
+   list-style-type: none;
+}
+
+#checkins li {
+   margin-bottom: 0.5em;
+}
+
+#checkins li img {
+   vertical-align: middle;
+}
