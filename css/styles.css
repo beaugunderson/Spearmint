@@ -14,3 +14,17 @@ li {
 li img {
    vertical-align: middle;
 }
+
+#states-with-checkins-map {
+   margin: 2em;
+   padding: 1em;
+   border-radius: 1em;
+   background-color: #eee;
+   width: 960px;
+   height: 500px;
+}
+
+#states path {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
