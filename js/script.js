@@ -50,6 +50,8 @@ function groupByPostalCode(data) {
    _.each(postalCodes, function(postalCode) {
       $('#postal-code-list').append(sprintf('<li>%(postalCode)s (%(city)s, %(state)s): %(checkins)s</li>', postalCode));
    });
+
+   $('#postal-code-list').makeacolumnlists();
 }
 
 function quantize(d) {
@@ -136,6 +138,8 @@ function groupByCategory(data) {
    _.each(categories, function(category) {
       $('#category-list').append(sprintf('<li><img src="%(icon)s" /> %(pluralName)s: %(checkins)s</li>', category));
    });
+
+   $('#category-list').makeacolumnlists();
 }
 
 function groupByGender(data) {
