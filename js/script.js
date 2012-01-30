@@ -144,8 +144,9 @@ function groupByCategory(data) {
 
 function groupByGender(data) {
    _.each(data, function(contact) {
-      var gender = 'unknown';
+      var gender = 'none';
 
+      // XXX: Manual capture of gender will go away soon
       if (contact.gender !== undefined) {
          gender = contact.gender;
       } else if (contact.accounts.foursquare !== undefined &&
