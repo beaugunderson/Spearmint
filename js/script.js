@@ -102,7 +102,7 @@ function mapByState(data) {
        .attr("id", "states")
        .attr("class", "Blues");
 
-   d3.json("js/d3/examples/data/us-states.json", function(json) {
+   d3.json("js/d3/data/us-states.json", function(json) {
      states.selectAll("path")
          .data(json.features)
        .enter().append("path")
