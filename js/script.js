@@ -43,9 +43,9 @@ function groupByPostalCode(data) {
       addPostalCode(checkin.venue.location);
    });
 
-   postalCodes = _.sortBy(postalCodes, function(postalCode) {
+   postalCodes = _.chain(postalCodes).sortBy(function(postalCode) {
       return 0 - postalCode.checkins;
-   });
+   }).first(24).value();
 
    _.each(postalCodes, function(postalCode) {
       $('#postal-code-list').append(sprintf('<li>%(postalCode)s (%(city)s, %(state)s): %(checkins)s</li>', postalCode));
@@ -131,9 +131,9 @@ function groupByCategory(data) {
       }
    });
 
-   categories = _.sortBy(categories, function(category) {
+   categories = _.chain(categories).sortBy(function(category) {
       return 0 - category.checkins;
-   });
+   }).first(24).value();
 
    _.each(categories, function(category) {
       $('#category-list').append(sprintf('<li><img src="%(icon)s" /> %(pluralName)s: %(checkins)s</li>', category));
