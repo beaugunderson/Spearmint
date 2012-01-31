@@ -105,6 +105,7 @@ function initCheckinBlobs(checkins) {
 
    circle.exit().remove();
 }
+
 function initMusicBlobs(scrobbles) {
    var hours = {};
 
