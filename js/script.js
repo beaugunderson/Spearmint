@@ -11,6 +11,7 @@ function lastfmQuantize(value, max) {
 }
 
 var dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+var dayNameLabels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Average'];
 
 function initCheckinBlobs(checkins) {
    var days = {};
@@ -58,11 +59,11 @@ function initCheckinBlobs(checkins) {
    }
 
    var color = d3.scale.quantize()
-      .domain([max, 1])
+      .domain([1, max])
       .range(d3.range(9));
 
    var w = 960;
-   var h = 30 + 7 * 30;
+   var h = 50 + 8 * 30;
 
    var svg = d3.select("#checkin-blobs-viz").append("svg:svg")
      .attr("width", w)
@@ -81,17 +82,23 @@ function initCheckinBlobs(checkins) {
    hours.exit().remove();
 
    var day = svg.selectAll("text.days")
-      .data(dayNames);
+      .data(dayNameLabels);
 
    day.enter().append("text")
-      .attr("transform", function(d, i) { return "translate(0," + (35 + (i * 30)) + ")"; })
+      .attr("transform", function(d, i) {
+         var offset = 35;
+         if (i == 7) {
+            offset = 55;
+         }
+         return "translate(0," + (offset + (i * 30)) + ")";
+      })
       .attr("class", "days")
       .attr("text-anchor", "bottom")
       .text(String);
 
    day.exit().remove();
 
-   var circle = svg.selectAll("circle")
+   var circle = svg.selectAll("circle.day")
       .data(data);
 
    circle.enter().append("svg:circle")
@@ -100,10 +107,38 @@ function initCheckinBlobs(checkins) {
       .attr("r", function(d) { return lastfmQuantize(d.value, max); })
       .attr("opacity", function(d) { return d.value > 0 ? 1 : 0; })
       .attr("class", function (d) {
-         return "q" + color(d.value) + "-9";
+         return "day q" + color(d.value) + "-9";
       });
 
    circle.exit().remove();
+
+   var averageData = [];
+
+   for (var i = 0; i < 24; i++) {
+      averageData[i] = 0;
+
+      for (var j = 0; j < 7; j++) {
+         averageData[i] += days[dayNames[j]].hours[i];
+      }
+
+      averageData[i] /= 7;
+   }
+
+   console.log(averageData);
+
+   var averageCircle = svg.selectAll("circle.average")
+      .data(averageData);
+
+   averageCircle.enter().append("svg:circle")
+      .attr("cy", function(d) { return 50 + 7 * 30; })
+      .attr("cx", function(d, i) { return 120 + i * 30; })
+      .attr("r", function(d) { return lastfmQuantize(d, max); })
+      .attr("opacity", function(d) { return d > 0 ? 1 : 0; })
+      .attr("class", function (d) {
+         return "average q" + color(d) + "-9";
+      });
+
+   averageCircle.exit().remove();
 }
 
 function initMusicBlobs(scrobbles) {
@@ -176,7 +211,7 @@ function initMusicBlobs(scrobbles) {
    }
 
    var color = d3.scale.quantize()
-      .domain([max, 1])
+      .domain([1, max])
       .range(d3.range(9));
 
    var w = 960;

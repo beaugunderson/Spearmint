@@ -20,7 +20,7 @@ circle:hover {
 }
 
 svg text {
-   fill: rgb(128,128,128);
+   fill: #eee;
 }
 
 svg text.hours {
@@ -31,7 +31,7 @@ svg text.hours {
    margin: 2em;
    padding: 1em;
    border-radius: 1em;
-   background-color: #eee;
+   background-color: #999;
    width: 960px;
    height: 500px;
 }
@@ -41,7 +41,7 @@ svg text.hours {
    margin: 2em;
    padding: 1em;
    border-radius: 1em;
-   background-color: #eee;
+   background-color: #999;
    width: 825px;
 }
 
