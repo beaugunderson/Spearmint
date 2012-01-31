@@ -36,12 +36,13 @@ svg text.hours {
    height: 500px;
 }
 
-#lastfm-blobs-viz {
+#lastfm-blobs-viz,
+#checkin-blobs-viz {
    margin: 2em;
    padding: 1em;
    border-radius: 1em;
    background-color: #eee;
-   width: 960px;
+   width: 825px;
 }
 
 #states path {

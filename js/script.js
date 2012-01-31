@@ -10,6 +10,101 @@ function lastfmQuantize(value, max) {
    return 2 + value / max * 15;
 }
 
+var dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+function initCheckinBlobs(checkins) {
+   var days = {};
+
+   _.each(dayNames, function(dayName) {
+      days[dayName] = {
+         hours: []
+      };
+
+      for (var i = 0; i < 24; i++) {
+         days[dayName].hours[i] = 0;
+      }
+   });
+
+   _.each(checkins, function(checkin) {
+      var m = moment(checkin.at);
+
+      var dayName = m.format('dddd');
+
+      var hour = m.hours();
+
+      days[dayName].hours[hour]++;
+   });
+
+   var max = 0;
+
+   _.each(days, function(day, key) {
+      _.each(day.hours, function(hour) {
+         if (hour > max) {
+            max = hour;
+         }
+      });
+   });
+
+   var data = [];
+
+   for (var i = 0; i < 7; i++) {
+      for (var j = 0; j < 24; j++) {
+         data.push({
+            day: i,
+            hour: j,
+            value: days[dayNames[i]].hours[j]
+         });
+      }
+   }
+
+   var color = d3.scale.quantize()
+      .domain([max, 1])
+      .range(d3.range(9));
+
+   var w = 960;
+   var h = 30 + 7 * 30;
+
+   var svg = d3.select("#checkin-blobs-viz").append("svg:svg")
+     .attr("width", w)
+     .attr("height", h);
+
+   var hours = svg.selectAll("text.hours")
+      .data(['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
+         '12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']);
+
+   hours.enter().append("text")
+      .attr("transform", function(d, i) { return sprintf("translate(%d,10)", 120 + i * 30); })
+      .attr("class", "hours")
+      .attr("text-anchor", "middle")
+      .text(String);
+
+   hours.exit().remove();
+
+   var day = svg.selectAll("text.days")
+      .data(dayNames);
+
+   day.enter().append("text")
+      .attr("transform", function(d, i) { return "translate(0," + (35 + (i * 30)) + ")"; })
+      .attr("class", "days")
+      .attr("text-anchor", "bottom")
+      .text(String);
+
+   day.exit().remove();
+
+   var circle = svg.selectAll("circle")
+      .data(data);
+
+   circle.enter().append("svg:circle")
+      .attr("cy", function(d) { return 30 + d.day * 30; })
+      .attr("cx", function(d) { return 120 + d.hour * 30; })
+      .attr("r", function(d) { return lastfmQuantize(d.value, max); })
+      .attr("opacity", function(d) { return d.value > 0 ? 1 : 0; })
+      .attr("class", function (d) {
+         return "q" + color(d.value) + "-9";
+      });
+
+   circle.exit().remove();
+}
 function initMusicBlobs(scrobbles) {
    var hours = {};
 
@@ -44,8 +139,6 @@ function initMusicBlobs(scrobbles) {
          max = hour.value;
       }
    });
-
-   console.log('max', max);
 
    var data = [];
    var dayNames = [];
@@ -304,7 +397,12 @@ $(function() {
    var foursquareUrl = baseUrl + '/Me/foursquare/getCurrent/checkin';
 
    //var contactsUrl = baseUrl + '/Me/contacts/';
-   var contactsUrl = baseUrl + '/query/getContact'
+   var placesUrl = baseUrl + '/Me/places/';
+   var contactsUrl = baseUrl + '/query/getContact';
+
+   $.getJSON(placesUrl, { 'limit': 1000 }, function(data) {
+      initCheckinBlobs(data);
+   });
 
    $.getJSON(lastfmUrl, { 'limit': 1000 }, function(data) {
       initMusicBlobs(data);
