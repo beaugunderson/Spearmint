@@ -15,6 +15,18 @@ li img {
    vertical-align: middle;
 }
 
+circle:hover {
+   opacity: 0.5;
+}
+
+svg text {
+   fill: rgb(128,128,128);
+}
+
+svg text.hours {
+   font-size: 9pt;
+}
+
 #states-with-checkins-map {
    margin: 2em;
    padding: 1em;
@@ -22,6 +34,14 @@ li img {
    background-color: #eee;
    width: 960px;
    height: 500px;
+}
+
+#lastfm-blobs-viz {
+   margin: 2em;
+   padding: 1em;
+   border-radius: 1em;
+   background-color: #eee;
+   width: 960px;
 }
 
 #states path {
