@@ -1,33 +1,29 @@
 {
-  "author": "Beau Gunderson <beau@beaugunderson.com>",
-  "name": "Spearmint",
-  "description": "Statistics experiments",
-  "version": "0.0.1",
-  "repository": {
-    "title": "Spearmint",
-    "handle": "spearmint",
-    "update": true,
-    "static": true,
-    "homepage": "https://github.com/beaugunderson/Spearmint",
-    "github": "https://github.com/beaugunderson/Spearmint",
-    "type": "app",
-    "uses": {
-      "services": [
-        "facebook",
-        "twitter",
-        "gcontacts",
-        "foursquare"
-      ],
-      "types": [
-        "contacts",
-        "places"
-      ]
-    },
-    "url": ""
-  },
-  "engines": {
-    "node": ">=0.4.9"
-  },
-  "dependencies": {},
-  "devDependencies": {}
+   "name": "Spearmint",
+   "author": "Beau Gunderson <beau@beaugunderson.com>",
+   "version": "0.0.1",
+   "licenses": [{
+      "type": "MIT",
+      "url": "http://creativecommons.org/licenses/MIT/"
+   }],
+   "repository": {
+      "title": "Spearmint",
+      "handle": "spearmint",
+      "static": true,
+      "homepage": "https://github.com/beaugunderson/Spearmint",
+      "github": "https://github.com/beaugunderson/Spearmint",
+      "type": "app",
+      "uses": {
+         "services": [
+            "facebook",
+            "twitter",
+            "gcontacts",
+            "foursquare"
+         ],
+         "types": [
+            "contacts",
+            "places"
+         ]
+      }
+   }
 }
