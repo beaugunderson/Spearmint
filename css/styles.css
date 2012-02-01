@@ -1,17 +1,33 @@
+/*
+html,
 body {
-   font-family: Georgia;
+   height: 100%;
 }
 
-ul {
+body {
+   font-family: MyriadPro-Regular, 'Myriad Pro Regular', MyriadPro, 'Myriad Pro', Helvetica, Arial, sans-serif;
+   color: #4d4d4d;
+   line-height: 1.15;
+}
+*/
+
+body {
+   padding-top: 60px;
+}
+
+.viz ul,
+.viz ul {
    margin: 2em;
    list-style-type: none;
 }
 
-li {
+.viz li,
+.viz li {
    margin-bottom: 0.5em;
 }
 
-li img {
+.viz li img,
+.viz li img {
    vertical-align: middle;
 }
 
@@ -27,11 +43,16 @@ svg text.hours {
    font-size: 9pt;
 }
 
+#states path {
+  stroke: #eee;
+  stroke-width: 1.5px;
+}
+
 #states-with-checkins-map {
    margin: 2em;
    padding: 1em;
    border-radius: 1em;
-   background-color: #999;
+   background-color: #eee;
    width: 960px;
    height: 500px;
 }
@@ -43,9 +64,4 @@ svg text.hours {
    border-radius: 1em;
    background-color: #999;
    width: 825px;
-}
-
-#states path {
-  stroke: #fff;
-  stroke-width: 1.5px;
 }

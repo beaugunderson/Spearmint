@@ -62,7 +62,7 @@ function initCheckinBlobs(checkins) {
       .domain([1, max])
       .range(d3.range(9));
 
-   var w = 960;
+   var w = 825;
    var h = 50 + 8 * 30;
 
    var svg = d3.select("#checkin-blobs-viz").append("svg:svg")
@@ -214,7 +214,7 @@ function initMusicBlobs(scrobbles) {
       .domain([1, max])
       .range(d3.range(9));
 
-   var w = 960;
+   var w = 825;
    var h = 30 + daySpan * 30;
 
    var svg = d3.select("#lastfm-blobs-viz").append("svg:svg")
@@ -312,7 +312,7 @@ function quantize(d) {
       return "q8-9";
    }
 
-   return "q3-9";
+   return "q5-9";
 
    //return "q" + Math.min(8, ~~(stateCheckins[d] * 9 / 12)) + "-9";
 }
@@ -352,8 +352,7 @@ function mapByState(data) {
      .append("svg");
 
    var states = svg.append("g")
-       .attr("id", "states")
-       .attr("class", "Blues");
+       .attr("id", "states");
 
    d3.json("js/d3/data/us-states.json", function(json) {
      states.selectAll("path")

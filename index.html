@@ -5,34 +5,64 @@
 
   <title>Spearmint</title>
 
+  <!--[if lt IE 9]>
+   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
   <link type="text/css" rel="stylesheet" href="js/d3/lib/colorbrewer/colorbrewer.css" />
 
   <style type="text/css">
-   @import url("css/reset.css");
+   @import url("bootstrap/css/bootstrap.css");
+   @import url("bootstrap/css/bootstrap.responsive");
+
    @import url("css/styles.css");
   </style>
  </head>
 
  <body>
-  <div id="experiments">
-   <div id="foursquare-checkins-by-category">
-    <h1>Foursquare checkins by category (Top 24)</h1>
+  <div class="navbar navbar-fixed-top">
+   <div class="navbar-inner">
+    <div class="container">
+     <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+      <span class="i-bar"></span>
+      <span class="i-bar"></span>
+      <span class="i-bar"></span>
+     </a>
+
+     <a class="brand" href="#">Spearmint</a>
+
+     <div class="nav-collapse">
+      <ul class="nav">
+       <li class="active"><a href="#">Home</a></li>
+       <li><a href="">Photos</a></li>
+       <li><a href="">Links</a></li>
+       <li><a href="">Contacts</a></li>
+       <li><a href="">Places</a></li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </div>
+
+  <div class="container">
+   <div id="foursquare-checkins-by-category" class="viz">
+    <h2>Foursquare checkins by category (Top 24)</h2>
 
     <ul id="category-list">
      <!-- Populated dynamically -->
     </ul>
    </div>
 
-   <div id="foursquare-checkins-by-postal-code">
-    <h1>Foursquare checkins by postal code (Top 24)</h1>
+   <div id="foursquare-checkins-by-postal-code" class="viz">
+    <h2>Foursquare checkins by postal code (Top 24)</h2>
 
     <ul id="postal-code-list">
      <!-- Populated dynamically -->
     </ul>
    </div>
 
-   <div id="contact-genders">
-    <h1>Contacts by gender</h1>
+   <div id="contact-genders" class="viz">
+    <h2>Contacts by gender</h2>
 
     <ul id="genders-list">
      <!-- Populated dynamically -->
@@ -40,7 +70,7 @@
    </div>
 
    <div id="checkin-blobs">
-    <h1>Hour of day distribution of your last 1,000 checkins</h1>
+    <h2>Hour of day distribution of your last 1,000 checkins</h2>
 
     <div id="checkin-blobs-viz" class="GnBu">
      <!-- Populated dynamically -->
@@ -48,7 +78,7 @@
    </div>
 
    <div id="lastfm-blobs">
-    <h1>Time distribution of your last 1,000 scrobbles</h1>
+    <h2>Time distribution of your last 1,000 scrobbles</h2>
 
     <div id="lastfm-blobs-viz" class="GnBu">
      <!-- Populated dynamically -->
@@ -56,9 +86,9 @@
    </div>
 
    <div id="states-with-checkins">
-    <h1>States with checkins</h1>
+    <h2>States with checkins</h2>
 
-    <div id="states-with-checkins-map">
+    <div id="states-with-checkins-map" class="GnBu">
      <!-- Populated dynamically -->
     </div>
    </div>
@@ -80,4 +110,20 @@
  <script src='js/config.js'></script>
 
  <script src='/static/js/viewer.js'></script>
+
+ <!--
+ <script src="bootstrap/js/bootstrap-tab.js"></script>
+ <script src="bootstrap/js/bootstrap-tooltip.js"></script>
+ <script src="bootstrap/js/bootstrap-popover.js"></script>
+ <script src="bootstrap/js/bootstrap-button.js"></script>
+ <script src="bootstrap/js/bootstrap-collapse.js"></script>
+ <script src="bootstrap/js/bootstrap-carousel.js"></script>
+ <script src="bootstrap/js/bootstrap-typeahead.js"></script>
+ -->
+
+ <script src="bootstrap/js/bootstrap-transition.js"></script>
+ <script src="bootstrap/js/bootstrap-alert.js"></script>
+ <script src="bootstrap/js/bootstrap-modal.js"></script>
+ <script src="bootstrap/js/bootstrap-dropdown.js"></script>
+ <script src="bootstrap/js/bootstrap-scrollspy.js"></script>
 </html>
