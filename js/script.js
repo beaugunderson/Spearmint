@@ -7,7 +7,7 @@ var genders = {};
 var stateAbbreviations;
 
 function lastfmQuantize(value, max) {
-   return 2 + value / max * 15;
+   return 2 + value / max * 14;
 }
 
 var dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -60,10 +60,10 @@ function initCheckinBlobs(checkins) {
 
    var color = d3.scale.quantize()
       .domain([1, max])
-      .range(d3.range(9));
+      .range(d3.range(3,9));
 
    var w = 825;
-   var h = 50 + 8 * 30;
+   var h = 20 + 8 * 30;
 
    var svg = d3.select("#checkin-blobs-viz").append("svg:svg")
      .attr("width", w)
@@ -88,7 +88,7 @@ function initCheckinBlobs(checkins) {
       .attr("transform", function(d, i) {
          var offset = 35;
          if (i == 7) {
-            offset = 55;
+            offset = 45;
          }
          return "translate(0," + (offset + (i * 30)) + ")";
       })
@@ -124,13 +124,18 @@ function initCheckinBlobs(checkins) {
       averageData[i] /= 7;
    }
 
-   console.log(averageData);
+   svg.append("line")
+      .attr("x1", 0)
+      .attr("y1", 24 + 7 * 30)
+      .attr("x2", 825)
+      .attr("y2", 24 + 7 * 30)
+      .attr("class", "rule");
 
    var averageCircle = svg.selectAll("circle.average")
       .data(averageData);
 
    averageCircle.enter().append("svg:circle")
-      .attr("cy", function(d) { return 50 + 7 * 30; })
+      .attr("cy", function(d) { return 40 + 7 * 30; })
       .attr("cx", function(d, i) { return 120 + i * 30; })
       .attr("r", function(d) { return lastfmQuantize(d, max); })
       .attr("opacity", function(d) { return d > 0 ? 1 : 0; })
@@ -212,10 +217,10 @@ function initMusicBlobs(scrobbles) {
 
    var color = d3.scale.quantize()
       .domain([1, max])
-      .range(d3.range(9));
+      .range(d3.range(3,9));
 
    var w = 825;
-   var h = 30 + daySpan * 30;
+   var h = 20 + daySpan * 30;
 
    var svg = d3.select("#lastfm-blobs-viz").append("svg:svg")
      .attr("width", w)
@@ -418,9 +423,9 @@ function groupByGender(data) {
       genders[name]++;
    });
 
-   _.each(genders, function(count, gender) {
-      $('#genders-list').append(sprintf('<li>%s: %s</li>', gender, count));
-   });
+   $('#male').text(genders['male']);
+   $('#female').text(genders['female']);
+   $('#unknown').text(genders['none']);
 }
 
 $(function() {

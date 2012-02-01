@@ -15,6 +15,10 @@ body {
    padding-top: 60px;
 }
 
+.row {
+   margin-left: 0.5em;
+}
+
 .viz ul,
 .viz ul {
    margin: 2em;
@@ -36,7 +40,14 @@ circle:hover {
 }
 
 svg text {
+   /*
    fill: #eee;
+   */
+}
+
+svg line.rule {
+   stroke: #ccc;
+   stroke-width: 1px;
 }
 
 svg text.hours {
@@ -51,8 +62,10 @@ svg text.hours {
 #states-with-checkins-map {
    margin: 2em;
    padding: 1em;
+   /*
    border-radius: 1em;
    background-color: #eee;
+   */
    width: 960px;
    height: 500px;
 }
@@ -61,7 +74,9 @@ svg text.hours {
 #checkin-blobs-viz {
    margin: 2em;
    padding: 1em;
+   /*
    border-radius: 1em;
    background-color: #999;
+   */
    width: 825px;
 }

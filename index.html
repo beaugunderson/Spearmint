@@ -48,7 +48,7 @@
    <div id="foursquare-checkins-by-category" class="viz">
     <h2>Foursquare checkins by category (Top 24)</h2>
 
-    <ul id="category-list">
+    <ul id="category-list" class="well">
      <!-- Populated dynamically -->
     </ul>
    </div>
@@ -56,7 +56,7 @@
    <div id="foursquare-checkins-by-postal-code" class="viz">
     <h2>Foursquare checkins by postal code (Top 24)</h2>
 
-    <ul id="postal-code-list">
+    <ul id="postal-code-list" class="well">
      <!-- Populated dynamically -->
     </ul>
    </div>
@@ -64,15 +64,31 @@
    <div id="contact-genders" class="viz">
     <h2>Contacts by gender</h2>
 
-    <ul id="genders-list">
-     <!-- Populated dynamically -->
-    </ul>
+    <div class="row">
+     <div class="span3 well">
+      <h2>Male</h2>
+
+      <h2 id="male"></h2>
+     </div>
+
+     <div class="span3 well">
+      <h2>Female</h2>
+
+      <h2 id="female"></h2>
+     </div>
+
+     <div class="span3 well">
+      <h2>Unknown</h2>
+
+      <h2 id="unknown"></h2>
+     </div>
+    </div>
    </div>
 
    <div id="checkin-blobs">
     <h2>Hour of day distribution of your last 1,000 checkins</h2>
 
-    <div id="checkin-blobs-viz" class="GnBu">
+    <div id="checkin-blobs-viz" class="PuBu well">
      <!-- Populated dynamically -->
     </div>
    </div>
@@ -80,15 +96,15 @@
    <div id="lastfm-blobs">
     <h2>Time distribution of your last 1,000 scrobbles</h2>
 
-    <div id="lastfm-blobs-viz" class="GnBu">
+    <div id="lastfm-blobs-viz" class="PuBu well">
      <!-- Populated dynamically -->
     </div>
    </div>
 
    <div id="states-with-checkins">
-    <h2>States with checkins</h2>
+    <h2>Checkins by state</h2>
 
-    <div id="states-with-checkins-map" class="GnBu">
+    <div id="states-with-checkins-map" class="PuBu well">
      <!-- Populated dynamically -->
     </div>
    </div>
@@ -119,11 +135,10 @@
  <script src="bootstrap/js/bootstrap-collapse.js"></script>
  <script src="bootstrap/js/bootstrap-carousel.js"></script>
  <script src="bootstrap/js/bootstrap-typeahead.js"></script>
- -->
-
  <script src="bootstrap/js/bootstrap-transition.js"></script>
  <script src="bootstrap/js/bootstrap-alert.js"></script>
  <script src="bootstrap/js/bootstrap-modal.js"></script>
  <script src="bootstrap/js/bootstrap-dropdown.js"></script>
  <script src="bootstrap/js/bootstrap-scrollspy.js"></script>
+ -->
 </html>
