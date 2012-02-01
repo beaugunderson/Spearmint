@@ -168,6 +168,10 @@ function initMusicBlobs(scrobbles) {
 
    var hoursArray = _.toArray(hours);
 
+   hoursArray = _.sortBy(hoursArray, function(hour) {
+      return hour.uts;
+   });
+
    var lastHour = moment(_.last(hoursArray).uts * 1000);
    var firstHour = moment(_.first(hoursArray).uts * 1000);
 
