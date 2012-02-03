@@ -1,18 +1,5 @@
-/*
-html,
 body {
-   height: 100%;
-}
-
-body {
-   font-family: MyriadPro-Regular, 'Myriad Pro Regular', MyriadPro, 'Myriad Pro', Helvetica, Arial, sans-serif;
-   color: #4d4d4d;
-   line-height: 1.15;
-}
-*/
-
-body {
-   padding-top: 60px;
+   padding-top: 40px;
 }
 
 .row {
@@ -35,14 +22,8 @@ body {
    vertical-align: middle;
 }
 
-circle:hover {
+#states path:hover {
    opacity: 0.5;
-}
-
-svg text {
-   /*
-   fill: #eee;
-   */
 }
 
 svg line.rule {
@@ -54,6 +35,11 @@ svg text.hours {
    font-size: 9pt;
 }
 
+svg text.map-label {
+   font-size: 10pt;
+   fill: #ddd;
+}
+
 #states path {
   stroke: #eee;
   stroke-width: 1.5px;
@@ -62,21 +48,18 @@ svg text.hours {
 #states-with-checkins-map {
    margin: 2em;
    padding: 1em;
-   /*
-   border-radius: 1em;
-   background-color: #eee;
-   */
-   width: 960px;
-   height: 500px;
+   width: 825px;
+   height: 400px;
 }
 
 #lastfm-blobs-viz,
 #checkin-blobs-viz {
    margin: 2em;
    padding: 1em;
-   /*
-   border-radius: 1em;
-   background-color: #999;
-   */
    width: 825px;
+}
+
+#lastfm-blobs-viz circle:hover,
+#checkin-blobs-viz circle:hover {
+   opacity: 0.5;
 }

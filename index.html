@@ -15,107 +15,159 @@
    @import url("bootstrap/css/bootstrap.css");
    @import url("bootstrap/css/bootstrap.responsive");
 
+   @import url("css/docs.css");
    @import url("css/styles.css");
   </style>
  </head>
 
- <body>
-  <div class="navbar navbar-fixed-top">
-   <div class="navbar-inner">
-    <div class="container">
-     <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-      <span class="i-bar"></span>
-      <span class="i-bar"></span>
-      <span class="i-bar"></span>
-     </a>
-
-     <a class="brand" href="#">Spearmint</a>
-
-     <div class="nav-collapse">
-      <ul class="nav">
-       <li class="active"><a href="#">Home</a></li>
-       <li><a href="">Photos</a></li>
-       <li><a href="">Links</a></li>
-       <li><a href="">Contacts</a></li>
-       <li><a href="">Places</a></li>
-      </ul>
-     </div>
-    </div>
-   </div>
-  </div>
-
+ <body data-spy="scroll">
   <div class="container">
-   <div id="foursquare-checkins-by-category" class="viz">
-    <h2>Foursquare checkins by category (Top 24)</h2>
+   <header class="jumbotron subhead" id="overview">
+    <h1>Visualize yourself.</h1>
 
-    <ul id="category-list" class="well">
-     <!-- Populated dynamically -->
-    </ul>
-   </div>
+    <p class="lead">When are you most active? Where do you spend your time?</p>
 
-   <div id="foursquare-checkins-by-postal-code" class="viz">
-    <h2>Foursquare checkins by postal code (Top 24)</h2>
+    <div class="subnav">
+     <ul class="nav nav-pills">
+      <li><a href="#photos">Photos</a></li>
+      <li><a href="#links">Links</a></li>
+      <li><a href="#contacts">Contacts</a></li>
+      <li><a href="#places">Places</a></li>
+      <li><a href="#music">Music</a></li>
+      <li><a href="#health">Health</a></li>
+      <li><a href="#code">Code</a></li>
+     </ul>
+    </div>
+   </header>
 
-    <ul id="postal-code-list" class="well">
-     <!-- Populated dynamically -->
-    </ul>
-   </div>
+   <section id="photos">
+    <div class="page-header">
+     <h1>Photos <small></small></h1>
+    </div>
 
-   <div id="contact-genders" class="viz">
-    <h2>Contacts by gender</h2>
+    <h2>TODO: A color palette from the user's photo stream</h2>
+    <h2>TODO: Popular photos (most comment activity?)</h2>
+   </section>
 
-    <div class="row">
-     <div class="span3 well">
-      <h2>Male</h2>
+   <section id="links">
+    <div class="page-header">
+     <h1>Links <small></small></h1>
+    </div>
 
-      <h2 id="male"></h2>
+    <h2>TODO: Popular links (share by multiple people)</h2>
+    <h2>TODO: Popular domains</h2>
+   </section>
+
+   <section id="contacts">
+    <div class="page-header">
+     <h1>Contacts <small></small></h1>
+    </div>
+
+    <div id="contact-genders" class="viz">
+     <h2>Contacts by gender</h2>
+
+     <div class="row">
+      <div class="span3 well">
+       <h2>Male <!--♂--></h2>
+
+       <h2 id="male"></h2>
+      </div>
+
+      <div class="span3 well">
+       <h2>Female <!--♀--></h2>
+
+       <h2 id="female"></h2>
+      </div>
+
+      <div class="span3 well">
+       <h2>Unknown</h2>
+
+       <h2 id="unknown"></h2>
+      </div>
      </div>
+    </div>
+   </section>
 
-     <div class="span3 well">
-      <h2>Female</h2>
+   <section id="places">
+    <div class="page-header">
+     <h1>Places <small></small></h1>
+    </div>
 
-      <h2 id="female"></h2>
+    <div id="foursquare-checkins-by-category" class="viz">
+     <h2>Foursquare checkins by category (Top 24)</h2>
+
+     <ul id="category-list" class="well">
+      <!-- Populated dynamically -->
+     </ul>
+    </div>
+
+    <div id="foursquare-checkins-by-postal-code" class="viz">
+     <h2>Foursquare checkins by postal code (Top 24)</h2>
+
+     <ul id="postal-code-list" class="well">
+      <!-- Populated dynamically -->
+     </ul>
+    </div>
+
+    <div id="checkin-blobs">
+     <h2>Hour of day distribution of your last 1,000 checkins</h2>
+
+     <div id="checkin-blobs-viz" class="PuBu well">
+      <!-- Populated dynamically -->
      </div>
+    </div>
 
-     <div class="span3 well">
-      <h2>Unknown</h2>
+    <div id="states-with-checkins">
+     <h2>Checkins by state</h2>
 
-      <h2 id="unknown"></h2>
+     <div id="states-with-checkins-map" class="PuBu well">
+      <!-- Populated dynamically -->
      </div>
     </div>
-   </div>
+   </section>
 
-   <div id="checkin-blobs">
-    <h2>Hour of day distribution of your last 1,000 checkins</h2>
-
-    <div id="checkin-blobs-viz" class="PuBu well">
-     <!-- Populated dynamically -->
+   <section id="music">
+    <div class="page-header">
+     <h1>Music <small></small></h1>
     </div>
-   </div>
 
-   <div id="lastfm-blobs">
-    <h2>Time distribution of your last 1,000 scrobbles</h2>
+    <div id="lastfm-blobs">
+     <h2>Time distribution of your last 1,000 scrobbles</h2>
 
-    <div id="lastfm-blobs-viz" class="PuBu well">
-     <!-- Populated dynamically -->
+     <div id="lastfm-blobs-viz" class="PuBu well">
+      <!-- Populated dynamically -->
+     </div>
     </div>
-   </div>
 
-   <div id="states-with-checkins">
-    <h2>Checkins by state</h2>
+    <h2>TODO: Popular artists</h2>
+   </section>
 
-    <div id="states-with-checkins-map" class="PuBu well">
-     <!-- Populated dynamically -->
+   <section id="health">
+    <div class="page-header">
+     <h1>Health <small></small></h1>
     </div>
-   </div>
+
+    <h2>TODO: Pedometer steps</h2>
+    <h2>TODO: Weight (from Withings scale?)</h2>
+    <h2>TODO: Zeo sleep times</h2>
+   </section>
+
+   <section id="code">
+    <div class="page-header">
+     <h1>Code <small></small></h1>
+    </div>
+
+    <h2>TODO: Hour of day distribution for GitHub activity</h2>
+   </section>
   </div>
  </body>
 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
- <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+ <script src="https://maps.google.com/maps/api/js?sensor=true"></script>
 
  <script src='js/d3/d3.min.js'></script>
  <script src='js/d3/d3.geo.min.js'></script>
+ <script src='js/d3/d3.geom.min.js'></script>
 
  <script src='js/jquery.multicolumnlists.js'></script>
 
@@ -127,18 +179,19 @@
 
  <script src='/static/js/viewer.js'></script>
 
+ <script src="bootstrap/js/bootstrap-scrollspy.js"></script>
+ <script src="bootstrap/js/bootstrap-button.js"></script>
+
  <!--
+ <script src="bootstrap/js/bootstrap-collapse.js"></script>
  <script src="bootstrap/js/bootstrap-tab.js"></script>
  <script src="bootstrap/js/bootstrap-tooltip.js"></script>
  <script src="bootstrap/js/bootstrap-popover.js"></script>
- <script src="bootstrap/js/bootstrap-button.js"></script>
- <script src="bootstrap/js/bootstrap-collapse.js"></script>
  <script src="bootstrap/js/bootstrap-carousel.js"></script>
  <script src="bootstrap/js/bootstrap-typeahead.js"></script>
  <script src="bootstrap/js/bootstrap-transition.js"></script>
  <script src="bootstrap/js/bootstrap-alert.js"></script>
  <script src="bootstrap/js/bootstrap-modal.js"></script>
  <script src="bootstrap/js/bootstrap-dropdown.js"></script>
- <script src="bootstrap/js/bootstrap-scrollspy.js"></script>
  -->
 </html>

@@ -6,7 +6,7 @@ var genders = {};
 
 var stateAbbreviations;
 
-function lastfmQuantize(value, max) {
+function blobQuantize(value, max) {
    return 2 + value / max * 14;
 }
 
@@ -70,8 +70,8 @@ function initCheckinBlobs(checkins) {
      .attr("height", h);
 
    var hours = svg.selectAll("text.hours")
-      .data(['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
-         '12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']);
+      .data(['am', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
+         'pm', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']);
 
    hours.enter().append("text")
       .attr("transform", function(d, i) { return sprintf("translate(%d,10)", 120 + i * 30); })
@@ -104,7 +104,7 @@ function initCheckinBlobs(checkins) {
    circle.enter().append("svg:circle")
       .attr("cy", function(d) { return 30 + d.day * 30; })
       .attr("cx", function(d) { return 120 + d.hour * 30; })
-      .attr("r", function(d) { return lastfmQuantize(d.value, max); })
+      .attr("r", function(d) { return blobQuantize(d.value, max); })
       .attr("opacity", function(d) { return d.value > 0 ? 1 : 0; })
       .attr("class", function (d) {
          return "day q" + color(d.value) + "-9";
@@ -137,7 +137,7 @@ function initCheckinBlobs(checkins) {
    averageCircle.enter().append("svg:circle")
       .attr("cy", function(d) { return 40 + 7 * 30; })
       .attr("cx", function(d, i) { return 120 + i * 30; })
-      .attr("r", function(d) { return lastfmQuantize(d, max); })
+      .attr("r", function(d) { return blobQuantize(d, max); })
       .attr("opacity", function(d) { return d > 0 ? 1 : 0; })
       .attr("class", function (d) {
          return "average q" + color(d) + "-9";
@@ -231,8 +231,8 @@ function initMusicBlobs(scrobbles) {
      .attr("height", h);
 
    var hours = svg.selectAll("text.hours")
-      .data(['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
-         '12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']);
+      .data(['am', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
+         'pm', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']);
 
    hours.enter().append("text")
       .attr("transform", function(d, i) { return sprintf("translate(%d,10)", 120 + i * 30); })
@@ -259,7 +259,7 @@ function initMusicBlobs(scrobbles) {
    circle.enter().append("svg:circle")
       .attr("cy", function(d) { return 30 + d.day * 30; })
       .attr("cx", function(d) { return 120 + d.hour * 30; })
-      .attr("r", function(d) { return lastfmQuantize(d.value, max); })
+      .attr("r", function(d) { return blobQuantize(d.value, max); })
       .attr("opacity", function(d) { return d.value > 0 ? 1 : 0; })
       .attr("class", function (d) {
          return "q" + color(d.value) + "-9";
@@ -317,7 +317,7 @@ function groupByPostalCode(data) {
 }
 
 function quantize(d) {
-   if (stateCheckins[d.properties.name] !== undefined) {
+   if (stateCheckins[d.properties.name] > 0) {
       return "q8-9";
    }
 
@@ -351,24 +351,60 @@ function mapByState(data) {
       });
 
       if (stateObject !== undefined) {
-         stateCheckins[stateObject.name] = true;
+         if (stateCheckins[stateObject.name] === undefined) {
+            stateCheckins[stateObject.name] = 0;
+         }
+
+         stateCheckins[stateObject.name]++;
       }
    });
 
+   var projection = d3.geo.albersUsa();
+
+   projection.scale(780);
+   projection.translate([412, 200]);
+
    var path = d3.geo.path();
 
+   path.projection(projection);
+
    var svg = d3.select("#states-with-checkins-map")
-     .append("svg");
+      .append("svg");
 
    var states = svg.append("g")
-       .attr("id", "states");
+      .attr("id", "states");
+
+   var labels = svg.append("g")
+      .attr("id", "labels");
 
    d3.json("js/d3/data/us-states.json", function(json) {
-     states.selectAll("path")
-         .data(json.features)
-       .enter().append("path")
-         .attr("class", data ? quantize : null)
-         .attr("d", path);
+      states.selectAll("path")
+            .data(json.features)
+         .enter().append("path")
+            .attr("class", data ? quantize : null)
+            .attr("d", path)
+            .on('mouseover', function(d) {
+               var c = path.centroid(d);
+
+               labels.append("circle")
+                  .attr("cy", c[1])
+                  .attr("cx", c[0])
+                  .attr("r", 15)
+                  .attr("class", sprintf("id-%s q8-9", d.id));
+
+               labels.append("text")
+                  .attr("transform", function(d, i) { return sprintf("translate(%d,%d)", c[0], c[1]); })
+                  .attr("class", sprintf("id-%s map-label", d.id))
+                  .attr("text-anchor", "middle")
+                  .attr("alignment-baseline", "middle")
+                  .text(stateCheckins[d.properties.name] ? stateCheckins[d.properties.name] : 0);
+            })
+            .on('mouseout', function(d) {
+               setInterval(function() {
+                  labels.selectAll('text.id-' + d.id).remove();
+                  labels.selectAll('circle.id-' + d.id).remove();
+               }, 1000);
+            });
    });
 
    states.selectAll("path")
@@ -436,6 +472,33 @@ $(function() {
    if (baseUrl === false) {
       window.alert("Couldn't find your locker, you might need to add a config.js (see <a href=\"https://me.singly.com/Me/devdocs/\">the docs</a>)");
    }
+
+   // Fix sub nav on scroll
+   var $win = $(window),
+      $nav = $('.subnav'),
+      navTop = $('.subnav').length && $('.subnav').offset().top,
+      isFixed = 0;
+
+   processScroll();
+
+   $win.on('scroll', processScroll);
+
+   function processScroll() {
+      var i;
+      var  scrollTop = $win.scrollTop();
+
+      if (scrollTop >= navTop && !isFixed) {
+         isFixed = 1;
+
+         $nav.addClass('subnav-fixed');
+      } else if (scrollTop <= navTop && isFixed) {
+         isFixed = 0;
+
+         $nav.removeClass('subnav-fixed');
+      }
+   }
+
+   $('.nav').scrollspy();
 
    var lastfmUrl = baseUrl + '/Me/lastfm/getCurrent/scrobble';
    var foursquareUrl = baseUrl + '/Me/foursquare/getCurrent/checkin';
