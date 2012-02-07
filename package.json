@@ -18,7 +18,9 @@
             "facebook",
             "twitter",
             "gcontacts",
-            "foursquare"
+            "foursquare",
+            "lastfm",
+            "github"
          ],
          "types": [
             "contacts",
