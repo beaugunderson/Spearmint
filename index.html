@@ -45,8 +45,18 @@
      <h1>Photos <small></small></h1>
     </div>
 
-    <h2>TODO: A color palette from the user's photo stream</h2>
-    <h2>TODO: Popular photos (most comment activity?)</h2>
+    <div id="popular-photo-colors">
+     <h2>Your most popular photos <small>from Facebook, currently</small></h2>
+
+     <div id="popular-photos">
+      <!-- Populated dynamically -->
+     </div>
+    </div>
+
+    <!--
+    TODO: A color palette from the user's photo stream
+    TODO: Popular photos (most comment activity?)
+    -->
    </section>
 
    <section id="links">
@@ -54,8 +64,14 @@
      <h1>Links <small></small></h1>
     </div>
 
-    <h2>TODO: Popular links (share by multiple people)</h2>
-    <h2>TODO: Popular domains</h2>
+    <p>
+     Here you might learn what time of day your friends are most likely to share links, what websites are the most popular within your friend group, and what recent links have been shared by more than one of your friends.
+    </p>
+
+    <!--
+    TODO: Popular links (share by multiple people)
+    TODO: Popular domains
+    -->
    </section>
 
    <section id="contacts">
@@ -139,7 +155,9 @@
      </div>
     </div>
 
-    <h2>TODO: Popular artists</h2>
+    <!--
+    TODO: Popular artists
+    -->
    </section>
 
    <section id="health">
@@ -147,9 +165,15 @@
      <h1>Health <small></small></h1>
     </div>
 
-    <h2>TODO: Pedometer steps</h2>
-    <h2>TODO: Weight (from Withings scale?)</h2>
-    <h2>TODO: Zeo sleep times</h2>
+    <p>
+     Here you might learn how many steps you took yesterday, last week, or last year. You might track your average sleep time, your weight, or your current mile pace.
+    </p>
+
+    <!--
+    TODO: Pedometer steps
+    TODO: Weight (from Withings scale?)
+    TODO: Zeo sleep times
+    -->
    </section>
 
    <section id="code">
@@ -157,7 +181,13 @@
      <h1>Code <small></small></h1>
     </div>
 
-    <h2>TODO: Hour of day distribution for GitHub activity</h2>
+    <p>
+     You might track when you get the most coding done by tracking your commit history from GitHub here.
+    </p>
+
+    <!--
+    TODO: Hour of day distribution for GitHub activity
+    -->
    </section>
   </div>
  </body>
@@ -174,13 +204,18 @@
  <script src='js/underscore.js'></script>
  <script src='js/moment.js'></script>
  <script src='js/sprintf.js'></script>
+ <script src='js/quantize.js'></script>
+ <script src='js/color-thief.js'></script>
+ <script src='js/jquery.masonry.min.js'></script>
+ <script src='js/jquery.annotate.js'></script>
+
+ <script src="bootstrap/js/bootstrap-scrollspy.js"></script>
+ <script src="bootstrap/js/bootstrap-button.js"></script>
+
  <script src="js/script.js"></script>
  <script src='js/config.js'></script>
 
  <script src='/static/js/viewer.js'></script>
-
- <script src="bootstrap/js/bootstrap-scrollspy.js"></script>
- <script src="bootstrap/js/bootstrap-button.js"></script>
 
  <!--
  <script src="bootstrap/js/bootstrap-collapse.js"></script>

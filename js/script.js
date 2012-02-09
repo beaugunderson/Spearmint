@@ -13,6 +13,95 @@ function blobQuantize(value, max) {
 var dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 var dayNameLabels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Average'];
 
+function popularPhotosByColor(photos) {
+   var transformed = [];
+
+   _.each(photos, function(photo) {
+      var comments = 0;
+      var likes = 0;
+
+      if (photo.sources[0] === undefined ||
+         photo.sources[0].data === undefined) {
+         return;
+      }
+
+      if (photo.sources[0].data.comments !== undefined &&
+         photo.sources[0].data.comments.data !== undefined) {
+         comments = photo.sources[0].data.comments.data.length;
+      }
+
+      if (photo.sources[0].data.likes !== undefined &&
+         photo.sources[0].data.likes.data !== undefined) {
+         likes = photo.sources[0].data.likes.data.length;
+      }
+
+      transformed.push({
+         id: photo.id,
+         url: photo.url,
+         thumbnail: photo.thumbnail,
+         timestamp: photo.timestamp,
+         comments: comments,
+         likes: likes
+      });
+   });
+
+   transformed = _.sortBy(transformed, function(photo) {
+      if (photo.comments >= photo.likes) {
+         return 0 - photo.comments;
+      }
+
+      return 0 - photo.likes;
+   });
+
+   _.chain(transformed).first(15).each(function(photo) {
+      var $div = $('<div class="item">').appendTo('#popular-photos');
+
+      var $i = $('<img />');
+
+      $i.hide();
+
+      $i.load(function() {
+         $(this).fadeIn(function() {
+            $('#popular-photos').masonry('reload');
+
+            $(this).parent().addAnnotations(function(annotation) {
+               return $('<span />').addClass(annotation.className).html(annotation.value);
+            }, [
+               { x: -20, y: -20, className: 'black circle note', value: photo.comments },
+               { x: -46, y: -20, className: 'gray circle note', value: photo.likes }
+            ]);
+
+            var $photo = $(this);
+
+            /*
+            try {
+               var color = getDominantColor($photo);
+               var palette = createPalette($photo, 3);
+
+               console.log(color);
+            } catch (e) {
+               console.log('error getting color');
+            }
+            */
+         });
+      }).error(function() {
+         $(this).parent().remove();
+
+         $('#popular-photos').masonry('reload');
+      });
+
+      $div.append($i);
+
+      //$i.attr('crossOrigin', 'Anonymous');
+      $i.attr('src', baseUrl + '/Me/photos/image/' + photo.id + '?proxy=1');
+   });
+
+   $('#popular-photos').masonry({
+      itemSelector: '.item',
+      columnWidth: 220
+   });
+}
+
 function initCheckinBlobs(checkins) {
    var days = {};
 
@@ -387,23 +476,23 @@ function mapByState(data) {
                var c = path.centroid(d);
 
                labels.append("circle")
-                  .attr("cy", c[1])
                   .attr("cx", c[0])
+                  .attr("cy", c[1])
                   .attr("r", 15)
+                  .attr("pointer-events", "none")
                   .attr("class", sprintf("id-%s q8-9", d.id));
 
                labels.append("text")
-                  .attr("transform", function(d, i) { return sprintf("translate(%d,%d)", c[0], c[1]); })
+                  .attr("transform", function(d, i) { return sprintf("translate(%d,%d)", c[0], c[1] + 1); })
                   .attr("class", sprintf("id-%s map-label", d.id))
                   .attr("text-anchor", "middle")
+                  .attr("pointer-events", "none")
                   .attr("alignment-baseline", "middle")
                   .text(stateCheckins[d.properties.name] ? stateCheckins[d.properties.name] : 0);
             })
             .on('mouseout', function(d) {
-               setInterval(function() {
-                  labels.selectAll('text.id-' + d.id).remove();
-                  labels.selectAll('circle.id-' + d.id).remove();
-               }, 1000);
+               labels.selectAll('text.id-' + d.id).remove();
+               labels.selectAll('circle.id-' + d.id).remove();
             });
    });
 
@@ -506,6 +595,7 @@ $(function() {
    //var contactsUrl = baseUrl + '/Me/contacts/';
    var placesUrl = baseUrl + '/Me/places/';
    var contactsUrl = baseUrl + '/query/getContact';
+   var photosUrl = baseUrl + '/query/getPhoto';
 
    $.getJSON(placesUrl, { 'limit': 1000 }, function(data) {
       initCheckinBlobs(data);
@@ -524,6 +614,10 @@ $(function() {
 
          mapByState(data);
       });
+   });
+
+   $.getJSON(photosUrl, { 'limit': 500, 'terms': '[me:true]', 'fields': '[id:1,sources.data.comments:1,sources.data.likes:1,url:1,thumbnail:1,timestamp:1]', 'sort': '\'{"timestamp":1}\'' }, function(data) {
+      popularPhotosByColor(data);
    });
 
    $.getJSON(contactsUrl, { 'limit': 5000, 'fields': '[gender:1,accounts.facebook.data.gender:1,accounts.foursquare.gender:1]' }, function(data) {

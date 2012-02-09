@@ -1,5 +1,6 @@
 body {
-   padding-top: 40px;
+   padding-top: 20px;
+   padding-bottom: 100px;
 }
 
 .row {
@@ -40,9 +41,13 @@ svg text.map-label {
    fill: #ddd;
 }
 
+svg #labels circle {
+   opacity: 0.6;
+}
+
 #states path {
-  stroke: #eee;
-  stroke-width: 1.5px;
+   stroke: #eee;
+   stroke-width: 1.5px;
 }
 
 #states-with-checkins-map {
@@ -62,4 +67,63 @@ svg text.map-label {
 #lastfm-blobs-viz circle:hover,
 #checkin-blobs-viz circle:hover {
    opacity: 0.5;
+}
+
+#popular-photos {
+   vertical-align: top;
+}
+
+#popular-photos .item {
+   width: 200px;
+   margin: 10px;
+   margin-right: 20px;
+   margin-left: 0px;
+   float: left;
+   vertical-align: top;
+}
+
+#popular-photos img {
+   max-width: 200px;
+   vertical-align: top;
+}
+
+/* Note styles */
+.item:hover span.note {
+   opacity: 1.0;
+}
+
+span.note:hover {
+   opacity: 1.0;
+}
+
+span.note {
+   display: block;
+   position: absolute;
+   opacity: 0.6;
+   top: -2px;
+   left: 0;
+   z-index: 10;
+   background: url(../images/notes-bg.png) no-repeat 0 0;
+   width: 25px;
+   height: 25px;
+   font-size: 12px;
+   font-weight: bold;
+   line-height: 25px;
+   /*letter-spacing: -1px;*/
+   text-align: center;
+   color: #fff;
+   text-decoration: none;
+   text-shadow: 0 1px 1px rgba(0,0,0,.15);
+}
+
+span.note.gray {
+   background-position: -175px 0;
+}
+
+span.note.black {
+   background-position: -150px 0;
+}
+
+span.wrap {
+   padding: 10px;
 }
