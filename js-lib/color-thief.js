@@ -81,7 +81,7 @@ function getDominantColor(sourceImage) {
 
       image.removeCanvas();
 
-      return;
+      throw e;
    }
 
    var pixels = imageData.data;
@@ -90,11 +90,11 @@ function getDominantColor(sourceImage) {
    // Store the RGB values in an array format suitable for quantize function
    var pixelArray = [];
 
-   for (var i Spearmint= 0; i < pixelCount; i++) {
+   for (var i = 0; i < pixelCount; i++) {
       // If pixel is mostly opaque and not white
       if (pixels[i*4+3] >= 125) {
          if (!(pixels[i*4] > 250 && pixels[i*4+1] > 250 && pixels[i*4+2] > 250)) {
-               pixelArray.push( [pixels[i*4], pixels[i*4+1], pixels[i*4+2]]);
+            pixelArray.push( [pixels[i*4], pixels[i*4+1], pixels[i*4+2]]);
          }
       }
    };
