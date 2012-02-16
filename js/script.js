@@ -1,5 +1,5 @@
 var categories = {};
-var postalCodes = {};
+var cities = {};
 var stateCheckins = {};
 
 var genders = {};
@@ -64,25 +64,23 @@ function popularPhotosByColor(photos) {
          $(this).fadeIn(function() {
             $('#popular-photos').masonry('reload');
 
+            var $photo = $(this);
+
+            try {
+               var color = getDominantColor($photo);
+               var palette = createPalette($photo, 3);
+
+               console.log(color, palette);
+            } catch (e) {
+               console.log('error getting color');
+            }
+
             $(this).parent().addAnnotations(function(annotation) {
                return $('<span />').addClass(annotation.className).html(annotation.value);
             }, [
                { x: -20, y: -20, className: 'black circle note', value: photo.comments },
                { x: -46, y: -20, className: 'gray circle note', value: photo.likes }
             ]);
-
-            var $photo = $(this);
-
-            /*
-            try {
-               var color = getDominantColor($photo);
-               var palette = createPalette($photo, 3);
-
-               console.log(color);
-            } catch (e) {
-               console.log('error getting color');
-            }
-            */
          });
       }).error(function() {
          $(this).parent().remove();
@@ -92,7 +90,7 @@ function popularPhotosByColor(photos) {
 
       $div.append($i);
 
-      //$i.attr('crossOrigin', 'Anonymous');
+      $i.attr('crossOrigin', '');
       $i.attr('src', baseUrl + '/Me/photos/image/' + photo.id + '?proxy=1');
    });
 
@@ -357,16 +355,16 @@ function initMusicBlobs(scrobbles) {
    circle.exit().remove();
 }
 
-function addPostalCode(location) {
-   var name = location.postalCode.replace(/-\d{4}$/, '');
+function addCity(location) {
+   var name = sprintf("%s, %s", $.trim(location.city), $.trim(location.state));
 
-   if (postalCodes[name] === undefined) {
-      postalCodes[name] = location;
+   if (cities[name] === undefined) {
+      cities[name] = location;
 
-      postalCodes[name].checkins = 0;
+      cities[name].checkins = 0;
    }
 
-   postalCodes[name].checkins++;
+   cities[name].checkins++;
 }
 
 function addCategory(category) {
@@ -381,28 +379,29 @@ function addCategory(category) {
    categories[name].checkins++;
 }
 
-function groupByPostalCode(data) {
+function groupByCity(data) {
    _.each(data, function(checkin) {
       if (checkin.venue === undefined) {
          return;
       }
 
-      if (checkin.venue.location.postalCode === undefined) {
+      if (checkin.venue.location.city === undefined ||
+         checkin.venue.location.state === undefined) {
          return;
       }
 
-      addPostalCode(checkin.venue.location);
+      addCity(checkin.venue.location);
    });
 
-   postalCodes = _.chain(postalCodes).sortBy(function(postalCode) {
-      return 0 - postalCode.checkins;
+   cities = _.chain(cities).sortBy(function(city) {
+      return 0 - city.checkins;
    }).first(24).value();
 
-   _.each(postalCodes, function(postalCode) {
-      $('#postal-code-list').append(sprintf('<li>%(postalCode)s (%(city)s, %(state)s): %(checkins)s</li>', postalCode));
+   _.each(cities, function(city) {
+      $('#city-list').append(sprintf('<li>%(city)s, %(state)s: %(checkins)s</li>', city));
    });
 
-   $('#postal-code-list').makeacolumnlists();
+   $('#city-list').makeacolumnlists();
 }
 
 function quantize(d) {
@@ -607,7 +606,7 @@ $(function() {
 
    $.getJSON(foursquareUrl, { 'limit': 1000, 'sort': 'at', 'order': 1 }, function(data) {
       groupByCategory(data);
-      groupByPostalCode(data);
+      groupByCity(data);
 
       $.getJSON("data/states.json", function(stateData) {
          stateAbbreviations = stateData.items;
