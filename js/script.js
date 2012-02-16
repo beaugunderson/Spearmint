@@ -13,7 +13,7 @@ function blobQuantize(value, max) {
 var dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 var dayNameLabels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Average'];
 
-function popularPhotosByColor(photos) {
+function photosByPopularity(photos) {
    var transformed = [];
 
    _.each(photos, function(photo) {
@@ -54,7 +54,7 @@ function popularPhotosByColor(photos) {
    });
 
    _.chain(transformed).first(15).each(function(photo) {
-      var $div = $('<div class="item">').appendTo('#popular-photos');
+      var $div = $('<div class="item">').appendTo('#popular-photos-container');
 
       var $i = $('<img />');
 
@@ -62,17 +62,14 @@ function popularPhotosByColor(photos) {
 
       $i.load(function() {
          $(this).fadeIn(function() {
-            $('#popular-photos').masonry('reload');
+            $('#popular-photos-container').masonry('reload');
 
             var $photo = $(this);
 
             try {
                var color = getDominantColor($photo);
                var palette = createPalette($photo, 3);
-
-               console.log(color, palette);
             } catch (e) {
-               console.log('error getting color');
             }
 
             $(this).parent().addAnnotations(function(annotation) {
@@ -85,7 +82,7 @@ function popularPhotosByColor(photos) {
       }).error(function() {
          $(this).parent().remove();
 
-         $('#popular-photos').masonry('reload');
+         $('#popular-photos-container').masonry('reload');
       });
 
       $div.append($i);
@@ -94,9 +91,50 @@ function popularPhotosByColor(photos) {
       $i.attr('src', baseUrl + '/Me/photos/image/' + photo.id + '?proxy=1');
    });
 
-   $('#popular-photos').masonry({
+   $('#popular-photos-container').masonry({
       itemSelector: '.item',
       columnWidth: 220
+   });
+}
+
+function photosByColor(photos) {
+   var image = document.getElementById("colors");
+
+   var hueMap = makeHueMap(image, 860, 400);
+
+   var ctx = image.getContext("2d");
+
+   ctx.putImageData(hueMap, 0, 0);
+
+   _.chain(photos).first(50).each(function(photo) {
+      var $i = $('<img />');
+
+      $i.hide();
+
+      $i.load(function() {
+         var $photo = $(this);
+
+         try {
+            var color = getDominantColor($photo);
+
+            var xy = rgbToColorXY(color, 860, 400);
+
+            $photo.css('left', xy.x - ($photo.width() / 2));
+            $photo.css('top', xy.y - ($photo.height() / 2));
+            $photo.css('border', sprintf('2px solid rgb(%(r)d,%(g)d,%(b)d)', color));
+
+            $photo.fadeIn();
+         } catch (e) {
+            console.log('error getting color');
+         }
+      }).error(function() {
+         $(this).parent().remove();
+      });
+
+      $('#photo-palette-container').prepend($i);
+
+      $i.attr('crossOrigin', '');
+      $i.attr('src', baseUrl + '/Me/photos/thumbnail/' + photo.id + '?proxy=1');
    });
 }
 
@@ -615,8 +653,10 @@ $(function() {
       });
    });
 
-   $.getJSON(photosUrl, { 'limit': 500, 'terms': '[me:true]', 'fields': '[id:1,sources.data.comments:1,sources.data.likes:1,url:1,thumbnail:1,timestamp:1]', 'sort': '\'{"timestamp":1}\'' }, function(data) {
-      popularPhotosByColor(data);
+   $.getJSON(photosUrl, { 'limit': 500, 'terms': '[me:true]', 'fields': '[id:1,sources.data.comments:1,sources.data.likes:1,url:1,thumbnail:1,timestamp:1]', 'sort': '\'{"timestamp":-1}\'' }, function(data) {
+      photosByPopularity(data);
+      photosByColor(data);
+
    });
 
    $.getJSON(contactsUrl, { 'limit': 5000, 'fields': '[gender:1,accounts.facebook.data.gender:1,accounts.foursquare.gender:1]' }, function(data) {

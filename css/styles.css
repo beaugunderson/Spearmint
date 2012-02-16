@@ -69,11 +69,11 @@ svg #labels circle {
    opacity: 0.5;
 }
 
-#popular-photos {
+#popular-photos-container {
    vertical-align: top;
 }
 
-#popular-photos .item {
+#popular-photos-container .item {
    width: 200px;
    margin: 10px;
    margin-right: 20px;
@@ -82,9 +82,33 @@ svg #labels circle {
    vertical-align: top;
 }
 
-#popular-photos img {
+#popular-photos-container img {
    max-width: 200px;
    vertical-align: top;
+}
+
+#photo-palette-container,
+#photo-palette-container img {
+   position: absolute;
+}
+
+#photo-palette {
+   margin-bottom: 400px;
+}
+
+#photo-palette h2 {
+   margin-bottom: 2em;
+}
+
+#photo-palette-container img {
+   max-width: 50px;
+}
+
+#photo-palette-container canvas {
+   position: absolute;
+   left: 0;
+   top: 0;
+   z-index: -1;
 }
 
 /* Note styles */

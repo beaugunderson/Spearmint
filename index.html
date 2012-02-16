@@ -45,18 +45,21 @@
      <h1>Photos <small></small></h1>
     </div>
 
-    <div id="popular-photo-colors">
+    <div id="popular-photos">
      <h2>Your most popular photos <small>from Facebook, currently</small></h2>
 
-     <div id="popular-photos">
+     <div id="popular-photos-container">
       <!-- Populated dynamically -->
      </div>
     </div>
 
-    <!--
-    TODO: A color palette from the user's photo stream
-    TODO: Popular photos (most comment activity?)
-    -->
+    <div id="photo-palette">
+     <h2>Your photos visualized by dominant color</h2>
+
+     <div id="photo-palette-container">
+      <canvas id="colors" width="860" height="400"></canvas>
+     </div>
+    </div>
    </section>
 
    <section id="links">
@@ -212,6 +215,7 @@
  <script src="bootstrap/js/bootstrap-scrollspy.js"></script>
  <script src="bootstrap/js/bootstrap-button.js"></script>
 
+ <script src='js/color.js'></script>
  <script src="js/script.js"></script>
  <script src='js/config.js'></script>
 
