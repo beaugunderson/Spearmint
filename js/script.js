@@ -46,11 +46,7 @@ function photosByPopularity(photos) {
    });
 
    transformed = _.sortBy(transformed, function(photo) {
-      if (photo.comments >= photo.likes) {
-         return 0 - photo.comments;
-      }
-
-      return 0 - photo.likes;
+      return 0 - (photo.comments + photo.likes);
    });
 
    _.chain(transformed).first(15).each(function(photo) {
@@ -87,8 +83,7 @@ function photosByPopularity(photos) {
 
       $div.append($i);
 
-      $i.attr('crossOrigin', '');
-      $i.attr('src', baseUrl + '/Me/photos/image/' + photo.id + '?proxy=1');
+      $i.attr('src', baseUrl + '/Me/photos/image/' + photo.id);
    });
 
    $('#popular-photos-container').masonry({
@@ -123,12 +118,12 @@ function photosByColor(photos) {
             $photo.css('top', xy.y - ($photo.height() / 2));
             $photo.css('border', sprintf('2px solid rgb(%(r)d,%(g)d,%(b)d)', color));
 
-            $photo.fadeIn();
+            $photo.show();
          } catch (e) {
             console.log('error getting color');
          }
       }).error(function() {
-         $(this).parent().remove();
+         $(this).remove();
       });
 
       $('#photo-palette-container').prepend($i);
