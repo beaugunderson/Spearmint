@@ -41,6 +41,6 @@ function photosByColor(photos) {
       $('#photo-palette-container').prepend($i);
 
       $i.attr('crossOrigin', '');
-      $i.attr('src', baseUrl + '/Me/photos/thumbnail/' + photo.id + '?proxy=1');
+      $i.attr('src', photoUrl + '/Me/photos/thumbnail/' + photo.id + '?proxy=1');
    });
 }
