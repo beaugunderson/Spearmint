@@ -1,5 +1,9 @@
 var apiToken;
 
+function setUserGlobals(info) {
+   apiToken = info.apiToken;
+}
+
 function blobQuantize(value, max) {
    return 2 + value / max * 14;
 }
@@ -39,15 +43,9 @@ $(function() {
 
    $('.nav').scrollspy();
 
-   if (apiToken === undefined) {
-      $.getJSON("https://singly.com/users/me/apiToken", function(apiData) {
-         apiToken = apiData.apiToken;
+   console.log('apiToken', apiToken);
 
-         apiTokenReady();
-      });
-   } else {
-      apiTokenReady();
-   }
+   apiTokenReady();
 });
 
 function apiTokenReady() {
