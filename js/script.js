@@ -1,3 +1,5 @@
+var apiToken;
+
 function blobQuantize(value, max) {
    return 2 + value / max * 14;
 }
@@ -37,6 +39,18 @@ $(function() {
 
    $('.nav').scrollspy();
 
+   if (apiToken === undefined) {
+      $.getJSON("https://singly.com/users/me/apiToken", function(apiData) {
+         apiToken = apiData.apiToken;
+
+         apiTokenReady();
+      });
+   } else {
+      apiTokenReady();
+   }
+});
+
+function apiTokenReady() {
    var lastfmUrl = baseUrl + '/Me/lastfm/getCurrent/scrobble';
    var foursquareUrl = baseUrl + '/Me/foursquare/getCurrent/checkin';
    var placesUrl = baseUrl + '/Me/places/';
@@ -70,4 +84,4 @@ $(function() {
    $.getJSON(contactsUrl, { 'limit': 5000, 'fields': '[gender:1,accounts.facebook.data.gender:1,accounts.foursquare.gender:1]' }, function(data) {
       groupByGender(data);
    });
-});
+}

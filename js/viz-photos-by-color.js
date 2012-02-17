@@ -1,4 +1,6 @@
 function photosByColor(photos) {
+   var photoUrl = "https://api.singly.com/" + apiToken;
+
    var image = document.getElementById("colors");
 
    var hueMap = makeHueMap(image, 860, 400);
@@ -19,11 +21,7 @@ function photosByColor(photos) {
             console.log('Spearmint: exception from getDominantColor()', e);
          }
 
-         console.log('color', color);
-
          if (color === undefined) {
-            console.log('color was undefined');
-
             $photo.remove();
 
             return;
