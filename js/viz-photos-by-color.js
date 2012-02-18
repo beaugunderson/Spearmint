@@ -1,5 +1,11 @@
 function photosByColor(photos) {
-   var photoUrl = "https://api.singly.com/" + apiToken;
+   var photoUrl = baseUrl;
+   var crossOrigin = false;
+
+   if (!/singly.com/.test(baseUrl)) {
+      photoUrl = "https://api.singly.com/" + apiToken;
+      crossOrigin = true;
+   }
 
    var image = document.getElementById("colors");
 
@@ -40,7 +46,10 @@ function photosByColor(photos) {
 
       $('#photo-palette-container').prepend($i);
 
-      $i.attr('crossOrigin', '');
+      if (crossOrigin) {
+         $i.attr('crossOrigin', '');
+      }
+
       $i.attr('src', photoUrl + '/Me/photos/thumbnail/' + photo.id + '?proxy=1');
    });
 }

@@ -43,12 +43,6 @@ $(function() {
 
    $('.nav').scrollspy();
 
-   console.log('apiToken', apiToken);
-
-   apiTokenReady();
-});
-
-function apiTokenReady() {
    var lastfmUrl = baseUrl + '/Me/lastfm/getCurrent/scrobble';
    var foursquareUrl = baseUrl + '/Me/foursquare/getCurrent/checkin';
    var placesUrl = baseUrl + '/Me/places/';
@@ -82,4 +76,4 @@ function apiTokenReady() {
    $.getJSON(contactsUrl, { 'limit': 5000, 'fields': '[gender:1,accounts.facebook.data.gender:1,accounts.foursquare.gender:1]' }, function(data) {
       groupByGender(data);
    });
-}
+});
