@@ -2,9 +2,7 @@ function photosByColor(photos) {
    var photoUrl = baseUrl;
    var crossOrigin = false;
 
-   console.log('baseUrl', baseUrl);
-
-   if (baseUrl.search("https://singly.com") === -1) {
+   if (baseUrl.search("https://singly.com") === -1 && baseUrl !== "") {
       photoUrl = "https://api.singly.com/" + apiToken;
       crossOrigin = true;
    }
