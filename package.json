@@ -2,7 +2,7 @@
    "name": "Spearmint",
    "author": "Beau Gunderson <beau@beaugunderson.com>",
    "description": "Statistic experiments (a work in progress)",
-   "version": "0.1.0",
+   "version": "0.2.0",
    "licenses": [{
       "type": "MIT",
       "url": "http://creativecommons.org/licenses/MIT/"
