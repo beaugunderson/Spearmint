@@ -36,7 +36,8 @@ function mapByState(data) {
       });
 
       if (stateObject !== undefined) {
-         stateCheckins[stateObject.name] = stateCheckins[stateObject.name] || 1;
+         stateCheckins[stateObject.name] = stateCheckins[stateObject.name] || 0;
+         stateCheckins[stateObject.name]++;
       }
    });
 
